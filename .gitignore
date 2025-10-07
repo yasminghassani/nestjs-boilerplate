@@ -21,8 +21,3 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
-
-# Optional lock files (if you switch managers)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
