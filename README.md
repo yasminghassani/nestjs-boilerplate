@@ -22,6 +22,7 @@ Example endpoint:
 - **NestJS** — Progressive Node.js framework for scalable APIs  
 - **MongoDB Atlas + Mongoose** — Cloud-hosted NoSQL database integration  
 - **Class Validator / Transformer** — DTO validation and transformation  
+- **bcrypt** — Password hashing for secure authentication  
 - **Render** — Cloud deployment ready  
 
 ---
@@ -44,6 +45,7 @@ Create a .env file in the root directory:
 ```bash
 PORT=3000
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<database>
+HASH_SECRET=
 ```
 
 💡 Use your MongoDB Atlas connection string.
@@ -63,6 +65,14 @@ yarn start:prod
 ```
 
 The app runs at 👉 http://localhost:3000
+
+## 🛡️ Security
+
+Passwords are hashed with bcrypt before storing in the database.
+
+A secret key is used to enhance hashing security (HMAC-style).
+
+Sensitive fields (like password) are never returned in API responses.
 
 ## 🛡️ License
 MIT License © 2025 Yasmin Ghassani
