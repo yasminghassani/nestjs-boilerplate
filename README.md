@@ -46,6 +46,7 @@ Create a .env file in the root directory:
 PORT=3000
 MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<database>
 HASH_SECRET=
+JWT_SECRET=
 ```
 
 💡 Use your MongoDB Atlas connection string.
