@@ -6,11 +6,21 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard'; // optional custom guard
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import 'dotenv/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URI!), // 👈 this connects MongoDB globally
+    ConfigModule.forRoot({
+      isGlobal: true, // 👈 makes env variables available everywhere
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.get<string>('MONGO_URI'),
+      }),
+    }),
     UsersModule,
     AuthModule,
   ],

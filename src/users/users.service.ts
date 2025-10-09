@@ -2,12 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
+import { PasswordService } from '../auth/password.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<User>,
+    private readonly passwordService: PasswordService,
+  ) {}
 
   async create(data: Partial<User>): Promise<User> {
+    // ✅ Hash password before saving
+    if (data.password) {
+      data.password = await this.passwordService.hashPassword(data.password);
+    }
+
     const user = new this.userModel(data);
     return user.save();
   }
